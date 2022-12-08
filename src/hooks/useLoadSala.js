@@ -6,13 +6,7 @@ export const useLoadSala = (idUser) => {
 
     const [salas, setsalas] = useState([]);
 
-    const LoadSala = async () => {
-        let res = await apiDiagrama(`/sala/list/${idUser}`);
-        if (!res.ok) {
-            console.warn(res.message);
-        }
-        setsalas(res.data);
-    }
+    
 
     const agregar = (sala) => {
         setsalas([...salas, sala]);
@@ -36,8 +30,18 @@ export const useLoadSala = (idUser) => {
     }
 
     useEffect(() => {
+        const LoadSala = async () => {
+            let res = await apiDiagrama(`/sala/list/${idUser}`);
+            if (!res.ok) {
+                console.warn(res.message);
+            }
+            setsalas(res.data);
+        }
+
+
+
         LoadSala();
-    }, []);
+    }, [idUser]);
 
     return {
         salas,
